@@ -30,8 +30,18 @@ void MainWindow::on_execute_clicked() {
             result += "Подходящий тип: qlonglong\n";
 
         bits = static_cast<int>(ceil(log2(abs(intich) + 1))) + 1;
-        result += QString("Бит: %1\n").arg(bits);
+        result += QString("Размер числа(теоретический)\nБит: %1\n").arg(bits);
         result += QString("Байт: %1\n").arg((bits + 7) / 8);
+
+        if (intich >= -128 && intich <= 127) {
+            result += QString("Реальный размер (объем памяти для qint8):\n %1 бит, %2 байт\n")
+                          .arg(sizeof(qint8) * 8)
+                          .arg(sizeof(qint8));
+        } else {
+            result += QString("Реальный размер (объем памяти для qlonglong):\n %1 бит, %2 байт\n")
+                          .arg(sizeof(qlonglong) * 8)
+                          .arg(sizeof(qlonglong));
+        }
     } else if (isReal) {
         result += "Подходящий тип: qreal\n";
         result += QString("Байт: %1\n").arg(sizeof(qreal));
